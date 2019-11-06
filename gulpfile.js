@@ -10,7 +10,7 @@ function image_optimize() {
   .pipe(
     imagemin([
       pngquant({
-        quality: "70-85", // 画質
+        quality: [.7, .85], // 画質
         speed: 1 // スピード
       }),
       mozjpeg({
