@@ -28,3 +28,10 @@ gulp.task('default', gulp.series(image_optimize,function(done) {
   console.log('Image optimization is complete');
   done();
 }));
+
+gulp.task('watch', function(){
+  gulp.watch('srcImg/*', gulp.series(image_optimize,function(done) {
+    console.log('Image optimization is complete');
+    done();
+  }));
+});
