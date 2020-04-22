@@ -5,7 +5,7 @@
 
 ## このリポジトリをClone
 リポジトリのアドレスは右上あたりにあるはずです
-一応以下になります。
+一応以下になります。  
 ```https://github.com/kohshi-nozawa/image-optimize.git```
 
 ## パッケージのインストール
