@@ -6,7 +6,7 @@
 ## このリポジトリをClone
 リポジトリのアドレスは右上あたりにあるはずです
 一応以下になります。  
-Cloneしたくない人は[こちら](https://github.com/kohshi-nozawa/image-optimize/archive/master.zip)からダウンロードしてもいいです。
+Cloneしたくない人は[こちら](https://github.com/kohshi-nozawa/image-optimize/archive/master.zip)からダウンロードしてもいいです。  
 ```https://github.com/kohshi-nozawa/image-optimize.git```
 
 ## パッケージのインストール
