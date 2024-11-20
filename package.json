@@ -12,6 +12,7 @@
     "gulp": "^4.0.2",
     "gulp-changed": "^4.0.2",
     "gulp-imagemin": "^6.1.1",
+    "gulp-webp": "^5.0.0",
     "imagemin-mozjpeg": "^8.0.0",
     "imagemin-pngquant": "^8.0.0"
   }
