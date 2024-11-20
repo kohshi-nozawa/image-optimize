@@ -3,7 +3,21 @@ const imagemin = require('gulp-imagemin');
 const mozjpeg = require("imagemin-mozjpeg");
 const pngquant = require("imagemin-pngquant");
 const changed = require("gulp-changed");
-const webp = require("gulp-webp"); // WebP変換用プラグイン
+
+let webp;
+
+// WebP変換タスク
+async function convert_to_webp() {
+  if (!webp) {
+    webp = (await import('gulp-webp')).default; // 動的インポート
+  }
+  return gulp.src('./srcWebp/**/*.{png,jpg,jpeg,JPG,JPEG,PNG}')
+    .pipe(changed("distWebp"))
+    .pipe(webp({
+      quality: 85 // WebP画質設定
+    }))
+    .pipe(gulp.dest("./distWebp/"));
+}
 
 // 画像圧縮タスク
 function image_optimize() {
@@ -24,18 +38,8 @@ function image_optimize() {
     .pipe(gulp.dest("./distImg/"));
 }
 
-// WebP変換タスク
-function convert_to_webp() {
-  return gulp.src('./srcWebp/**/*.{png,jpg,jpeg,JPG,JPEG,PNG}')
-    .pipe(changed("distWebp"))
-    .pipe(webp({
-      quality: 85 // WebP画質設定
-    }))
-    .pipe(gulp.dest("./distWebp/"));
-}
-
 // デフォルトタスク
-gulp.task('default', gulp.series(image_optimize, convert_to_webp, function(done) {
+gulp.task('default', gulp.series(image_optimize, convert_to_webp, function (done) {
   console.log('Image optimization and WebP conversion are complete');
   done();
 }));
