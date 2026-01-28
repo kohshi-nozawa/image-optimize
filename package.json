@@ -4,16 +4,18 @@
   "description": "",
   "main": "gulpfile.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npm run build && npm run webp",
+    "build": "node scripts/optimize-images.js",
+    "webp": "node scripts/convert-to-webp.js",
+    "clear": "node scripts/clean.js",
+    "help": "node scripts/help.js"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "gulp": "^4.0.2",
-    "gulp-changed": "^4.0.2",
-    "gulp-imagemin": "^6.1.1",
-    "gulp-webp": "^5.0.0",
-    "imagemin-mozjpeg": "^8.0.0",
-    "imagemin-pngquant": "^8.0.0"
+    "fs-extra": "^11.2.0",
+    "glob": "^10.3.10",
+    "sharp": "^0.33.2"
   }
 }
