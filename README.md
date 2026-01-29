@@ -24,7 +24,7 @@ npm install
 
 ### ディレクトリ構成
 *   **`srcImg/`**: 圧縮したい画像 (JPG, PNG, HEIC) をここに置きます。
-*   **`srcWebp/`**: WebPに変換したい画像 (JPG, PNG) をここに置きます。
+*   **`srcWebp/`**: WebPに変換したい画像 (JPG, PNG, HEIC) をここに置きます。
 *   **`distImg/`**: 圧縮後の画像がここに出力されます (HEICはPNGに変換されます)。
 *   **`distWebp/`**: WebP変換後の画像がここに出力されます。
 

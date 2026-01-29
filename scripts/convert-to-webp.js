@@ -6,7 +6,7 @@ const fs = require('fs-extra');
 const SRC_DIR = 'srcWebp';
 const DIST_DIR = 'distWebp';
 
-const PATTERN = '**/*.{png,jpg,jpeg}'; // No HEIC for webp src usually? Default gulp file had png,jpg,jpeg.
+const PATTERN = '**/*.{png,jpg,jpeg,heic}';
 
 async function convertToWebp() {
   console.log('Starting WebP Conversion...');
