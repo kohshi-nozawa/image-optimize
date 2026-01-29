@@ -1,36 +1,71 @@
-# 使用準備
-## node.jsのインストール
-[こちら](https://nodejs.org/ja/)からダウンロードできます。  
-推奨版が好ましいです。
+# image-optimize
+画像最適化＆WebP変換ツール。
+GulpからNode.jsスクリプト (`sharp`) へ移行しました。
 
-## このリポジトリをClone
-リポジトリのアドレスは右上あたりにあるはずです
-一応以下になります。  
-```https://github.com/kohshi-nozawa/image-optimize.git```  
-Cloneしたくない人は[こちら](https://github.com/kohshi-nozawa/image-optimize/archive/master.zip)からダウンロードしてもいいです。  
+## 使用準備
 
-## パッケージのインストール
-Cloneしたリポジトリのディレクトリ配下で以下のコマンドを実行
-```
-npm i -D
+### 1. Node.jsのインストール
+[こちら](https://nodejs.org/ja/)から推奨版をダウンロードしてインストールしてください。
+
+### 2. リポジトリの準備
+```bash
+git clone git@github.com:kohshi-nozawa/image-optimize.git
+cd image-optimize
 ```
 
-# 使用方法
-## srcImage配下にjpgもしくはpngを配置
-ファイルをそのまま置いても、ディレクトリにしてまとめても両方実行可能です。
-
-## 実行コマンドの入力
-以下で実行
-```
-npx gulp
+### 3. パッケージのインストール
+```bash
+npm install
 ```
 
-もしくは、下記を実行しておくとsrcImage配下の変更を自動で検知して実行してくれます。
-```
-npx gulp watch
+---
+
+## 使用方法
+
+### ディレクトリ構成
+*   **`srcImg/`**: 圧縮したい画像 (JPG, PNG, HEIC) をここに置きます。
+*   **`srcWebp/`**: WebPに変換したい画像 (JPG, PNG) をここに置きます。
+*   **`distImg/`**: 圧縮後の画像がここに出力されます (HEICはPNGに変換されます)。
+*   **`distWebp/`**: WebP変換後の画像がここに出力されます。
+
+※ ディレクトリ構造は維持されます。名前や構造を変更したくない場合はそのまま配置してください。
+
+### コマンド一覧
+
+#### 一括実行 (推奨)
+画像圧縮とWebP変換の両方を実行します。
+```bash
+npm start
 ```
 
-僕は両方うつのめんどくさいんでエイリアスにして登録しちゃってます。
+#### 画像圧縮のみ実行
+`srcImg` -> `distImg` の処理のみを行います。
+```bash
+npm run build
+```
 
-## distImage配下に圧縮後のファイルが出力される
-ファイル名、ディレクトリ構造はそのままで出力されます。
+#### WebP変換のみ実行
+`srcWebp` -> `distWebp` の処理のみを行います。
+```bash
+npm run webp
+```
+
+#### クリーンアップ
+出力ディレクトリ (`distImg`, `distWebp`) の中身を全て削除します。
+```bash
+npm run clear
+```
+
+#### ヘルプ表示
+コマンド一覧を表示します。
+```bash
+npm run help
+```
+
+---
+
+## 主な機能
+*   **圧縮**: `sharp` を使用して画質を保ちつつファイルサイズを削減します。
+*   **HEIC対応**: Mac/iPhone等のHEIC形式を自動的にPNGに変換します。
+*   **同期**: `src` 側で削除されたファイルは、実行時に `dist` 側からも削除されます（ゴミが残りません）。
+*   **拡張子**: 大文字・小文字の拡張子 (`.PNG`, `.jpg` 等) に対応しています。
