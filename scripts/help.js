@@ -17,16 +17,18 @@ ${chalk.green('Available Commands:')}
     Runs both image optimization and WebP conversion.
     Use this to process all images in both src directories.
 
-  ${chalk.blue('npm run build')}
+  ${chalk.blue('npm run build [directory]')}
     Runs only image optimization.
-    - Source: ./srcImg
-    - Dest:   ./distImg
+    - Default Source: ./srcImg
+    - Default Dest:   ./distImg
+    - [directory]: Optional. If specified, optimizes images IN-PLACE in that directory.
     - Compresses JPG/PNG and converts HEIC to PNG.
 
-  ${chalk.blue('npm run webp')}
+  ${chalk.blue('npm run webp [directory]')}
     Runs only WebP conversion.
-    - Source: ./srcWebp
-    - Dest:   ./distWebp
+    - Default Source: ./srcWebp
+    - Default Dest:   ./distWebp
+    - [directory]: Optional. If specified, creates WebP files IN the same directory.
     - Converts JPG/PNG to WebP.
 
   ${chalk.blue('npm run clear')}

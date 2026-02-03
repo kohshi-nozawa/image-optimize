@@ -44,10 +44,20 @@ npm start
 npm run build
 ```
 
+**[NEW]** 引数としてディレクトリパスを指定すると、そのディレクトリ内の画像を**直接最適化**（上書き）します。
+```bash
+npm run build ./path/to/directory
+```
+
 #### WebP変換のみ実行
 `srcWebp` -> `distWebp` の処理のみを行います。
 ```bash
 npm run webp
+```
+
+**[NEW]** 引数としてディレクトリパスを指定すると、そのディレクトリ内にWebPファイルを**直接生成**します。
+```bash
+npm run webp ./path/to/directory
 ```
 
 #### クリーンアップ
