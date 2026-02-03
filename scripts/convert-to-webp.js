@@ -9,17 +9,30 @@ const DIST_DIR = 'distWebp';
 const PATTERN = '**/*.{png,jpg,jpeg,heic}';
 
 async function convertToWebp() {
-  console.log('Starting WebP Conversion...');
+  const targetDir = process.argv[2];
+  const isDirectMode = !!targetDir;
 
-  await fs.ensureDir(DIST_DIR);
+  const srcDir = isDirectMode ? targetDir : SRC_DIR;
+  const distDir = isDirectMode ? targetDir : DIST_DIR;
 
-  const files = glob.sync(PATTERN, { cwd: SRC_DIR, nodir: true, nocase: true });
+  console.log(`Starting WebP Conversion... ${isDirectMode ? '(Direct Mode)' : ''}`);
+
+  if (!isDirectMode) {
+    await fs.ensureDir(distDir);
+  } else {
+    if (!fs.existsSync(srcDir)) {
+      console.error(`Directory not found: ${srcDir}`);
+      process.exit(1);
+    }
+  }
+
+  const files = glob.sync(PATTERN, { cwd: srcDir, nodir: true, nocase: true });
 
   for (const file of files) {
-    const srcPath = path.join(SRC_DIR, file);
+    const srcPath = path.join(srcDir, file);
     const parse = path.parse(file);
     const destFile = path.join(parse.dir, parse.name + '.webp');
-    const destPath = path.join(DIST_DIR, destFile);
+    const destPath = path.join(distDir, destFile);
 
     let needsUpdate = true;
     try {
@@ -31,7 +44,9 @@ async function convertToWebp() {
     } catch (e) { }
 
     if (needsUpdate) {
-      await fs.ensureDir(path.dirname(destPath));
+      if (!isDirectMode) {
+        await fs.ensureDir(path.dirname(destPath));
+      }
       console.log(`Converting: ${file} -> ${destFile}`);
       await sharp(srcPath)
         .webp({ quality: 85 })
@@ -39,22 +54,24 @@ async function convertToWebp() {
     }
   }
 
-  // Sync Orphans
-  console.log('Cleaning orphans...');
-  const distFiles = glob.sync('**/*.webp', { cwd: DIST_DIR, nodir: true });
+  // Sync Orphans (Only in non-direct mode)
+  if (!isDirectMode) {
+    console.log('Cleaning orphans...');
+    const distFiles = glob.sync('**/*.webp', { cwd: distDir, nodir: true });
 
-  for (const distFile of distFiles) {
-    const parse = path.parse(distFile);
+    for (const distFile of distFiles) {
+      const parse = path.parse(distFile);
 
-    // Find matches in src
-    const srcCandidates = files.filter(f => {
-      const fParse = path.parse(f);
-      return fParse.dir === parse.dir && fParse.name === parse.name;
-    });
+      // Find matches in src
+      const srcCandidates = files.filter(f => {
+        const fParse = path.parse(f);
+        return fParse.dir === parse.dir && fParse.name === parse.name;
+      });
 
-    if (srcCandidates.length === 0) {
-      console.log(`Removing orphan: ${distFile}`);
-      await fs.remove(path.join(DIST_DIR, distFile));
+      if (srcCandidates.length === 0) {
+        console.log(`Removing orphan: ${distFile}`);
+        await fs.remove(path.join(distDir, distFile));
+      }
     }
   }
 
